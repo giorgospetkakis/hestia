@@ -1,15 +1,10 @@
 {
   "version": 2,
   "buildCommand": "bash scripts/build.sh",
-  "outputDirectory": "frontend/build/web",
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/build/web/$1"
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.11"
     }
-  ]
+  }
 }

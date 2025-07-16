@@ -48,4 +48,13 @@ echo "🏗️ Building Flutter web app..."
 flutter build web --release
 cd ..
 
+# Debug: Show what was built
+echo "📁 Build output contents:"
+ls -la frontend/build/web/
+
+# Copy built files to public directory for Vercel
+echo "📋 Copying build files to public directory..."
+mkdir -p public
+cp -r frontend/build/web/* public/
+
 echo "✅ Build completed successfully!" 
