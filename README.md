@@ -84,9 +84,10 @@ just docker-prod
 #### Backend Setup
 
 ```bash
-# Setup backend environment
-just setup-env
+# Install backend dependencies
 just install-backend
+
+# Create and edit backend/.env manually as needed
 
 # Initialize database
 just db-init
@@ -98,9 +99,10 @@ just dev-backend
 #### Frontend Setup
 
 ```bash
-# Setup frontend environment
-just setup-env
+# Install frontend dependencies
 just install-frontend
+
+# Create and edit frontend/.env manually as needed
 
 # Run the app
 just dev-frontend
@@ -109,9 +111,12 @@ just dev-frontend
 ### Option 3: Backend Only (API Development)
 
 ```bash
-# Setup backend only
-just setup-env
+# Install backend dependencies
 just install-backend
+
+# Create and edit backend/.env manually as needed
+
+# Initialize database
 just db-init
 
 # Start backend server
@@ -124,7 +129,7 @@ just dev-backend
 
 ### Backend Environment Variables
 
-Create `backend/.env` with:
+Create and edit `backend/.env` with:
 
 ```env
 # Database
@@ -156,7 +161,7 @@ SUPABASE_KEY=your-supabase-anon-key
 
 ### Frontend Environment Variables
 
-Create `frontend/.env` with:
+Create and edit `frontend/.env` with:
 
 ```env
 # Backend API

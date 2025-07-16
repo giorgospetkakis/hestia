@@ -14,7 +14,7 @@ install: install-backend install-frontend
 # Install backend dependencies
 install-backend:
     @echo "📦 Installing backend dependencies..."
-    cd backend && python -m venv venv
+    cd backend && python3 -m venv venv
     cd backend && source venv/bin/activate && pip install -r requirements.txt
     @echo "✅ Backend dependencies installed"
 
@@ -25,15 +25,8 @@ install-frontend:
     @echo "✅ Frontend dependencies installed"
 
 # Setup development environment
-setup: install setup-env
+setup: install
     @echo "🚀 Development environment ready!"
-
-# Copy and setup environment files
-setup-env:
-    @echo "⚙️ Setting up environment files..."
-    cp backend/.env.example backend/.env
-    cp frontend/.env.example frontend/.env
-    @echo "📝 Please edit backend/.env and frontend/.env with your configuration"
 
 # ===== DEVELOPMENT SERVERS =====
 
@@ -177,10 +170,10 @@ build-web:
     @echo "🏗️ Building for web..."
     cd frontend && flutter build web --release
 
-# Build for Vercel
-build-vercel:
-    @echo "🏗️ Building for Vercel deployment..."
-    bash scripts/vercel-build.sh
+# Build for deployment
+build-deploy:
+    @echo "🏗️ Building for deployment..."
+    bash scripts/build.sh
 
 # Docker build
 docker-build:

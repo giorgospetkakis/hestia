@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "bash scripts/vercel-build.sh",
+  "buildCommand": "bash scripts/build.sh",
   "routes": [
     {
       "src": "/api/(.*)",
