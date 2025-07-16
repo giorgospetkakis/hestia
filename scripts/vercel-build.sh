@@ -29,8 +29,30 @@ flutter pub get
 echo "🏗️ Building Flutter web app..."
 flutter build web --release
 
+# Ensure API directory exists and is properly set up
+echo "🔧 Setting up API directory..."
+cd ..
+mkdir -p api
+if [ ! -f api/index.py ]; then
+    echo "📝 Creating API entry point..."
+    cat > api/index.py << 'EOF'
+# Vercel serverless function entry point
+import sys
+import os
+
+# Add backend to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
+
+# Import the FastAPI app from backend
+from main import app
+
+# Export the app for Vercel
+handler = app
+EOF
+fi
+
 # Copy built frontend to Vercel output
 echo "📁 Copying built files..."
-cp -r build/web/* ../frontend/build/web/
+cp -r frontend/build/web/* frontend/build/web/
 
 echo "✅ Vercel build completed successfully!" 

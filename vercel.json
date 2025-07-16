@@ -2,14 +2,14 @@
   "version": 2,
   "buildCommand": "bash scripts/vercel-build.sh",
   "functions": {
-    "backend/main.py": {
+    "api/index.py": {
       "runtime": "python@3.11.0"
     }
   },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/main.py"
+      "dest": "/api/index.py"
     },
     {
       "src": "/(.*)",
