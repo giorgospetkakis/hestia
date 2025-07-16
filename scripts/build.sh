@@ -51,8 +51,4 @@ handler = app
 EOF
 fi
 
-# Copy built frontend to output directory
-echo "📁 Copying built files..."
-cp -r frontend/build/web/* frontend/build/web/
-
 echo "✅ Build completed successfully!" 
