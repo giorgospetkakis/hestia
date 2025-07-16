@@ -1,0 +1,32 @@
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# Development files
+.vscode/
+.idea/
+*.iml
+
+# Local development
+.env.local
+.env.development
+.env.test
+
+# Build artifacts (will be built on Railway)
+frontend/build/
+backend/__pycache__/
+*.pyc
+
+# Test files
+tests/
+**/test/
+**/tests/
+
+# CI/CD
+.github/
+
+ 
