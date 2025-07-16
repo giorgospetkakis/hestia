@@ -275,28 +275,30 @@ See `docs/integrations/` for detailed setup guides.
 just build-web
 ```
 
-### Vercel Deployment
-The project is configured for automatic deployment on Vercel:
+### Railway Deployment
+The project is configured for automatic deployment on Railway:
 
-1. **Pre-build Flutter**: Before deploying, build the Flutter web app locally:
+1. **Connect to Railway**: 
+   - Install Railway CLI: `npm i -g @railway/cli`
+   - Login: `railway login`
+   - Link project: `railway link`
+
+2. **Deploy**: 
    ```bash
-   just build-web
-   git add frontend/build/web
-   git commit -m "build: update Flutter web build"
-   git push
+   railway up
    ```
 
-2. **Automatic Deployment**: Vercel will automatically:
+3. **Automatic Deployment**: Railway will automatically:
    - Install Python dependencies
-   - Use pre-built Flutter web files
-   - Deploy the FastAPI backend as serverless functions
-   - Serve the Flutter frontend as static files
+   - Build Flutter web app
+   - Start FastAPI server with static file serving
+   - Deploy everything as a single service
 
 ### Environment-Specific Configs
 
-- `vercel.json` - Vercel deployment configuration
-- `scripts/build.sh` - Universal build script (handles both local and Vercel builds)
-- `api/index.py` - Serverless function entry point
+- `railway.json` - Railway deployment configuration
+- `scripts/railway-start.sh` - Railway start script
+- `backend/app/main.py` - FastAPI app with static file serving
 
 ### CI/CD Status
 
@@ -306,7 +308,7 @@ Once the repository is created on GitHub and the workflows have run at least onc
 - **Frontend Tests** - Flutter unit tests and coverage  
 - **Code Quality** - Formatting, linting, and security checks
 - **Build** - Backend and frontend build status
-- **Deploy to Vercel** - Production deployment status
+- **Deploy to Railway** - Production deployment status
 
 ---
 

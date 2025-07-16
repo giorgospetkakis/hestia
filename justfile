@@ -136,10 +136,7 @@ build-web:
     @echo "🏗️ Building for web..."
     cd frontend && flutter build web --release
 
-# Build for deployment
-build-deploy:
-    @echo "🏗️ Building for deployment..."
-    bash scripts/build.sh
+
 
 # ===== CLEANUP =====
 
