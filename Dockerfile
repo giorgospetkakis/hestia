@@ -44,7 +44,7 @@ RUN cd frontend && flutter pub get
 COPY . .
 
 # Build Flutter web app
-RUN cd frontend && flutter build web --release --web-renderer html
+RUN cd frontend && flutter build web --release
 
 # Create public directory and copy Flutter build
 RUN mkdir -p public && cp -r frontend/build/web/* public/
