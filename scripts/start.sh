@@ -37,6 +37,16 @@ sed "s/listen 80 default_server;/listen $PORT default_server;/" /etc/nginx/nginx
 echo "🔧 Nginx config preview:"
 head -20 /tmp/nginx.conf
 
+# Debug: Test if nginx can access the static files
+echo "🔍 Testing nginx access to static files:"
+nginx -t -c /tmp/nginx.conf || echo "❌ Nginx config test failed"
+
+# Debug: Test if nginx can read the public directory
+echo "🔍 Testing nginx directory access:"
+ls -la /app/public/ | head -5
+echo "🔍 Testing nginx file access:"
+ls -la /app/public/index.html || echo "❌ Cannot access index.html"
+
 nginx -c /tmp/nginx.conf -g "daemon off;" &
 NGINX_PID=$!
 
