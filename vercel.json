@@ -1,22 +1,22 @@
 {
-  "version": 2,
-  "buildCommand": "bash scripts/vercel-build.sh",
-  "functions": {
-    "api/index.py": {
-      "runtime": "python3.13"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
+    "version": 2,
+    "buildCommand": "bash scripts/vercel-build.sh",
+    "functions": {
+        "api/index.py": {
+            "runtime": "vercel-python@4.7.2"
+        }
     },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/build/web/$1"
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/api/index.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/build/web/$1"
+        }
+    ],
+    "env": {
+        "PYTHONPATH": "backend"
     }
-  ],
-  "env": {
-    "PYTHONPATH": "backend"
-  }
-} 
+}
