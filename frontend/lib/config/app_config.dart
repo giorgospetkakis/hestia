@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class AppConfig {
   static const String _devApiUrl = 'http://localhost:8000';
-  static const String _prodApiUrl = 'https://hestia-production.railway.app'; // Update with your Railway URL
+  static const String _prodApiUrl = 'https://hestia-production-d51d.up.railway.app';
   
   static String get apiBaseUrl {
     if (kDebugMode) {
