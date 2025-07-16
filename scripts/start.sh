@@ -9,7 +9,15 @@ echo "🚀 Starting Hestia with reverse proxy..."
 
 # Start Nginx first (so health check is immediately available)
 echo "🌐 Starting Nginx reverse proxy..."
-nginx -c /etc/nginx/nginx.conf -g "daemon off;" &
+
+# Get the port from environment variable or default to 80
+PORT=${PORT:-80}
+echo "🔧 Using port: $PORT"
+
+# Create a temporary nginx config with the correct port
+sed "s/listen 80 default_server;/listen $PORT default_server;/" /etc/nginx/nginx.conf > /tmp/nginx.conf
+
+nginx -c /tmp/nginx.conf -g "daemon off;" &
 NGINX_PID=$!
 
 # Wait for Nginx to be ready
@@ -19,7 +27,7 @@ sleep 2
 # Test that Nginx is responding
 echo "🔍 Testing Nginx health check..."
 for i in {1..10}; do
-    if curl -f http://localhost/health >/dev/null 2>&1; then
+    if curl -f http://localhost:$PORT/health >/dev/null 2>&1; then
         echo "✅ Nginx health check is working!"
         break
     fi
@@ -54,8 +62,8 @@ done
 echo "✅ Services started!"
 echo "📊 FastAPI PID: $FASTAPI_PID"
 echo "📊 Nginx PID: $NGINX_PID"
-echo "🌐 Nginx listening on port 80"
-echo "🔗 Health check available at: http://localhost/health"
+echo "🌐 Nginx listening on port $PORT"
+echo "🔗 Health check available at: http://localhost:$PORT/health"
 
 # Keep the script running and monitor services
 echo "🔄 Monitoring services..."
@@ -72,7 +80,7 @@ while true; do
     fi
     
     # Test health check every 30 seconds
-    if ! curl -f http://localhost/health >/dev/null 2>&1; then
+    if ! curl -f http://localhost:$PORT/health >/dev/null 2>&1; then
         echo "⚠️  Health check failed, but services are still running"
     fi
     
