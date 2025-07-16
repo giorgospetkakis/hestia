@@ -59,27 +59,9 @@ No calories. No shame. No endless input boxes. Just care, rhythm, and delicious 
 - **Python 3.11+** for backend
 - **Flutter 3.16+** for frontend
 - **Just** (task runner) - [Installation guide](https://just.systems/)
-- **Docker & Docker Compose** (optional, for full stack)
 - **Git**
 
-### Option 1: Full Stack with Docker (Recommended)
-
-```bash
-# Clone the repository
-git clone https://github.com/giorgospetkakis/hestia.git
-cd hestia
-
-# Setup environment and start full stack
-just setup
-just docker-prod
-
-# The app will be available at:
-# - Backend API: http://localhost:8000
-# - Frontend: http://localhost:3000 (if using web)
-# - API Docs: http://localhost:8000/docs
-```
-
-### Option 2: Local Development
+### Local Development Setup
 
 #### Backend Setup
 
@@ -108,7 +90,8 @@ just install-frontend
 just dev-frontend
 ```
 
-### Option 3: Backend Only (API Development)
+
+### Backend Only (API Development)
 
 ```bash
 # Install backend dependencies
@@ -254,8 +237,8 @@ The project uses [Just](https://just.systems/) as a task runner. Run `just --hel
 - `just db-upgrade` / `just db-downgrade` - Apply/rollback migrations
 
 **Build & Deployment:**
-- `just build` - Build both backend and frontend
-- `just docker-dev` / `just docker-prod` - Docker environments
+- `just build-web` - Build frontend for web
+- `just build-deploy` - Build for deployment
 - `just deploy` - Production deployment
 
 **Utilities:**
@@ -293,7 +276,7 @@ just build-web
 ### Environment-Specific Configs
 
 - `vercel.json` - Vercel deployment configuration
-- `docker-compose.dev.yml` - Local development setup
+- `scripts/build.sh` - Universal build script
 - `scripts/deployment/` - Deployment automation
 
 ### CI/CD Status

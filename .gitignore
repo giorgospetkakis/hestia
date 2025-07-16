@@ -237,8 +237,7 @@ backend/static/uploads/
 .env.test
 .env.production
 
-# Docker
-.dockerignore
+
 
 # OS generated files
 .DS_Store
