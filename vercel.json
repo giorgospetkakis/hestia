@@ -1,19 +1,11 @@
 {
   "version": 2,
   "buildCommand": "bash scripts/vercel-build.sh",
-  "builds": [
-    {
-      "src": "backend/main.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
-    },
-    {
-      "src": "frontend/build/web/**",
-      "use": "@vercel/static"
+  "functions": {
+    "backend/main.py": {
+      "runtime": "python3.11"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -24,11 +16,6 @@
       "dest": "frontend/build/web/$1"
     }
   ],
-  "functions": {
-    "backend/main.py": {
-      "runtime": "python3.11"
-    }
-  },
   "env": {
     "PYTHONPATH": "backend"
   }
