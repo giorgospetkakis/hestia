@@ -1,22 +1,14 @@
 {
-    "version": 2,
-    "buildCommand": "bash scripts/vercel-build.sh",
-    "functions": {
-        "api/index.py": {
-            "runtime": "vercel-python@4.7.2"
-        }
+  "version": 2,
+  "buildCommand": "bash scripts/vercel-build.sh",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
     },
-    "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "/api/index.py"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "frontend/build/web/$1"
-        }
-    ],
-    "env": {
-        "PYTHONPATH": "backend"
+    {
+      "src": "/(.*)",
+      "dest": "frontend/build/web/$1"
     }
+  ]
 }
