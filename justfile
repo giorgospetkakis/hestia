@@ -136,6 +136,20 @@ build-web:
     @echo "🏗️ Building for web..."
     cd frontend && flutter build web --release
 
+# Build for Android
+build-android:
+    @echo "🤖 Building for Android..."
+    cd frontend && flutter build apk --release
+
+# Build for iOS
+build-ios:
+    @echo "🍎 Building for iOS..."
+    cd frontend && flutter build ios --release
+
+# Build for all platforms
+build-all: build-web build-android build-ios
+    @echo "✅ All platforms built"
+
 # ===== CLEANUP =====
 
 # Clean all build artifacts
