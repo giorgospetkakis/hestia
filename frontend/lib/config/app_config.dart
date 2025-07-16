@@ -1,16 +1,23 @@
 import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 class AppConfig {
   static const String _devApiUrl = 'http://localhost:8000';
-  static const String _prodApiUrl = 'https://hestia-production-d51d.up.railway.app';
+  
+  // Get the Railway domain from environment variable
+  static String get _railwayDomain {
+    const domain = String.fromEnvironment('RAILWAY_PUBLIC_DOMAIN', 
+                                        defaultValue: 'hestia-production-d51d.up.railway.app');
+    return domain;
+  }
   
   static String get apiBaseUrl {
     if (kDebugMode) {
       // Development mode
       return _devApiUrl;
     } else {
-      // Production mode
-      return _prodApiUrl;
+      // Production mode - use Railway domain from environment
+      return 'https://$_railwayDomain';
     }
   }
   

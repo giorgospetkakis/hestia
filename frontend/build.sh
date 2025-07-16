@@ -26,7 +26,11 @@ echo "📦 Installing dependencies..."
 flutter pub get
 
 echo "🔨 Building Flutter web app..."
-flutter build web --release --base-href /
+echo "🚂 Railway Domain: ${RAILWAY_PUBLIC_DOMAIN:-'not set'}"
+
+# Build with Railway domain environment variable
+flutter build web --release --base-href / \
+  --dart-define=RAILWAY_PUBLIC_DOMAIN="${RAILWAY_PUBLIC_DOMAIN:-hestia-production-d51d.up.railway.app}"
 
 echo "✅ Build complete!"
 ls -la build/web/ 
