@@ -1,0 +1,70 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - '.github/workflows/build.yml'
+      - 'justfile'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - '.github/workflows/build.yml'
+      - 'justfile'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Install Just
+      uses: taiki-e/install-action@just
+      
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          backend/venv
+          frontend/.dart_tool
+          ~/.cache/pip
+        key: ${{ runner.os }}-build-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          
+    - name: Install dependencies
+      shell: bash
+      run: |
+        just install-backend
+        just install-frontend
+        
+    - name: Build for web
+      shell: bash
+      run: just build-web
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          frontend/build/web/
+        retention-days: 30 
