@@ -30,22 +30,25 @@ python3 -m pip install --upgrade pip
 pip3 install -r requirements.txt
 cd ..
 
-# Install Flutter if not available
-if ! command -v flutter &> /dev/null; then
-    echo "📱 Installing Flutter..."
-    git clone https://github.com/flutter/flutter.git -b stable --depth 1
-    export PATH="$PWD/flutter/bin:$PATH"
-    flutter doctor
+# For Vercel deployment, use pre-built Flutter web files
+if [ "$BUILD_FOR_VERCEL" = true ]; then
+    echo "🌐 Using pre-built Flutter web files for Vercel deployment..."
+    if [ ! -d "frontend/build/web" ]; then
+        echo "❌ Error: frontend/build/web directory not found!"
+        echo "💡 Please run 'just build-web' locally and commit the build files."
+        exit 1
+    fi
+    echo "✅ Found pre-built Flutter web files"
+else
+    # Local development - build Flutter
+    echo "📱 Installing Flutter dependencies..."
+    cd frontend
+    flutter pub get
+    
+    # Build frontend for web
+    echo "🏗️ Building Flutter web app..."
+    flutter build web --release
+    cd ..
 fi
-
-# Install Flutter dependencies
-echo "📱 Installing Flutter dependencies..."
-cd frontend
-flutter pub get
-
-# Build frontend for web
-echo "🏗️ Building Flutter web app..."
-flutter build web --release
-cd ..
 
 echo "✅ Build completed successfully!" 
