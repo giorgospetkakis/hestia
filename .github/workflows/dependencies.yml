@@ -2,87 +2,87 @@ name: Dependencies
 
 on:
   schedule:
-    - cron: '0 2 * * 1'  # Every Monday at 2 AM UTC
-  workflow_dispatch:  # Allow manual trigger
+    - cron: "0 2 * * 1" # Every Monday at 2 AM UTC
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.16.0'
-        channel: 'stable'
-        
-    - name: Install Just
-      uses: taiki-e/install-action@just
-      
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          backend/venv
-          frontend/.dart_tool
-          ~/.cache/pip
-        key: ${{ runner.os }}-deps-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-deps-
-          
-    - name: Install dependencies
-      run: |
-        just install-backend
-        just install-frontend
-        
-    - name: Check for outdated Python packages
-      run: |
-        echo "## Outdated Python Packages" >> $GITHUB_STEP_SUMMARY
-        cd backend && source venv/bin/activate && pip list --outdated >> $GITHUB_STEP_SUMMARY || echo "No outdated packages found" >> $GITHUB_STEP_SUMMARY
-        
-    - name: Check for outdated Flutter packages
-      run: |
-        echo "## Outdated Flutter Packages" >> $GITHUB_STEP_SUMMARY
-        cd frontend && flutter pub outdated >> $GITHUB_STEP_SUMMARY || echo "No outdated packages found" >> $GITHUB_STEP_SUMMARY
-        
-    - name: Check for security vulnerabilities
-      run: |
-        echo "## Security Check Results" >> $GITHUB_STEP_SUMMARY
-        just security >> $GITHUB_STEP_SUMMARY || echo "Security check completed" >> $GITHUB_STEP_SUMMARY
-        
-    - name: Create issue for outdated dependencies
-      if: failure()
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const fs = require('fs');
-          const summary = fs.readFileSync(process.env.GITHUB_STEP_SUMMARY, 'utf8');
-          
-          await github.rest.issues.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            title: '🔍 Dependency Update Check - ' + new Date().toISOString().split('T')[0],
-            body: `## Dependency Update Check
-            
-            This issue was automatically created by the dependency check workflow.
-            
-            ${summary}
-            
-            ### Next Steps
-            - [ ] Review outdated packages
-            - [ ] Update dependencies safely
-            - [ ] Test thoroughly after updates
-            - [ ] Close this issue when complete
-            
-            ---
-            *This issue was created automatically by GitHub Actions*`,
-            labels: ['dependencies', 'automation']
-          }); 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install Just
+        uses: taiki-e/install-action@just
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            backend/venv
+            frontend/.dart_tool
+            ~/.cache/pip
+          key: ${{ runner.os }}-deps-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      - name: Install dependencies
+        run: |
+          just install-backend
+          just install-frontend
+
+      - name: Check for outdated Python packages
+        run: |
+          echo "## Outdated Python Packages" >> $GITHUB_STEP_SUMMARY
+          cd backend && source venv/bin/activate && pip list --outdated >> $GITHUB_STEP_SUMMARY || echo "No outdated packages found" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check for outdated Flutter packages
+        run: |
+          echo "## Outdated Flutter Packages" >> $GITHUB_STEP_SUMMARY
+          cd frontend && flutter pub outdated >> $GITHUB_STEP_SUMMARY || echo "No outdated packages found" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check for security vulnerabilities
+        run: |
+          echo "## Security Check Results" >> $GITHUB_STEP_SUMMARY
+          just security >> $GITHUB_STEP_SUMMARY || echo "Security check completed" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create issue for outdated dependencies
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync(process.env.GITHUB_STEP_SUMMARY, 'utf8');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔍 Dependency Update Check - ' + new Date().toISOString().split('T')[0],
+              body: `## Dependency Update Check
+              
+              This issue was automatically created by the dependency check workflow.
+              
+              ${summary}
+              
+              ### Next Steps
+              - [ ] Review outdated packages
+              - [ ] Update dependencies safely
+              - [ ] Test thoroughly after updates
+              - [ ] Close this issue when complete
+              
+              ---
+              *This issue was created automatically by GitHub Actions*`,
+              labels: ['dependencies', 'automation']
+            });

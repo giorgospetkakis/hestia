@@ -2,59 +2,59 @@ name: Code Quality
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
-      - '**/*.py'
-      - '**/*.dart'
-      - '.github/workflows/code-quality.yml'
-      - 'justfile'
+      - "**/*.py"
+      - "**/*.dart"
+      - ".github/workflows/code-quality.yml"
+      - "justfile"
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
-      - '**/*.py'
-      - '**/*.dart'
-      - '.github/workflows/code-quality.yml'
-      - 'justfile'
+      - "**/*.py"
+      - "**/*.dart"
+      - ".github/workflows/code-quality.yml"
+      - "justfile"
 
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.16.0'
-        channel: 'stable'
-        
-    - name: Install Just
-      uses: taiki-e/install-action@just
-      
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          backend/venv
-          frontend/.dart_tool
-          ~/.cache/pip
-        key: ${{ runner.os }}-quality-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-quality-
-          
-    - name: Install dependencies
-      shell: bash
-      run: |
-        just install-backend
-        just install-frontend
-        
-    - name: Check code quality
-      shell: bash
-      run: just lint 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install Just
+        uses: taiki-e/install-action@just
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            backend/venv
+            frontend/.dart_tool
+            ~/.cache/pip
+          key: ${{ runner.os }}-quality-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-quality-
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          just install-backend
+          just install-frontend
+
+      - name: Check code quality
+        shell: bash
+        run: just lint

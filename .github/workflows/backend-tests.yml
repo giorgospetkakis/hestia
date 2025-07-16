@@ -2,64 +2,64 @@ name: Backend Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
-      - 'backend/**'
-      - '.github/workflows/backend-tests.yml'
-      - 'justfile'
+      - "backend/**"
+      - ".github/workflows/backend-tests.yml"
+      - "justfile"
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
-      - 'backend/**'
-      - '.github/workflows/backend-tests.yml'
-      - 'justfile'
+      - "backend/**"
+      - ".github/workflows/backend-tests.yml"
+      - "justfile"
 
 jobs:
   test-backend:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         python-version: [3.11]
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-        
-    - name: Install Just
-      uses: taiki-e/install-action@just
-      
-    - name: Cache Python dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          backend/venv
-          ~/.cache/pip
-        key: ${{ runner.os }}-python-${{ matrix.python-version }}-${{ hashFiles('backend/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-python-${{ matrix.python-version }}-
-          
-    - name: Install backend dependencies
-      shell: bash
-      run: just install-backend
-      
-    - name: Run backend tests
-      shell: bash
-      run: just test-backend
-      
-    - name: Run backend tests with coverage
-      shell: bash
-      run: just test-backend-coverage
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: backend/htmlcov/coverage.xml
-        flags: backend
-        name: backend-coverage
-        fail_ci_if_error: false 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Just
+        uses: taiki-e/install-action@just
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            backend/venv
+            ~/.cache/pip
+          key: ${{ runner.os }}-python-${{ matrix.python-version }}-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-${{ matrix.python-version }}-
+
+      - name: Install backend dependencies
+        shell: bash
+        run: just install-backend
+
+      - name: Run backend tests
+        shell: bash
+        run: just test-backend
+
+      - name: Run backend tests with coverage
+        shell: bash
+        run: just test-backend-coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: backend/htmlcov/coverage.xml
+          flags: backend
+          name: backend-coverage
+          fail_ci_if_error: false

@@ -78,6 +78,7 @@ No calories. No shame. No endless input boxes. Just care, rhythm, and delicious 
 #### Option 2: Manual Setup
 
 **Backend Setup:**
+
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -85,12 +86,12 @@ pip install -r requirements.txt
 ```
 
 **Frontend Setup:**
+
 ```bash
 cd frontend
 flutter pub get
 flutter run -d chrome
 ```
-
 
 ### Backend Only (API Development)
 
@@ -244,36 +245,43 @@ just db-upgrade
 The project uses [Just](https://just.systems/) as a task runner. Run `just --help` to see all available commands:
 
 **Setup & Installation:**
+
 - `just setup` - Complete development environment setup
 - `just install` - Install all dependencies
 - `just setup-env` - Copy environment files
 
 **Development:**
+
 - `just dev-backend` - Start backend server with hot reload
 - `just dev-frontend` - Start Flutter development server
 - `just dev` - Start both (requires tmux)
 
 **Testing:**
+
 - `just test` - Run all tests
 - `just test-backend` / `just test-frontend` - Platform-specific tests
 - `just test-backend-coverage` - With coverage reports
 
 **Code Quality:**
+
 - `just format` - Format all code
 - `just lint` - Lint all code
 - `just check` - Complete quality check (format + lint + test)
 
 **Database:**
+
 - `just db-init` - Initialize database
 - `just db-migrate "message"` - Create new migration
 - `just db-upgrade` / `just db-downgrade` - Apply/rollback migrations
 
 **Build & Deployment:**
+
 - `just build-web` - Build frontend for web
 - `just build-deploy` - Build for deployment
 - `just deploy` - Production deployment
 
 **Utilities:**
+
 - `just status` - Show project status
 - `just health` - Health checks
 - `just logs` - View logs
@@ -283,9 +291,9 @@ The project uses [Just](https://just.systems/) as a task runner. Run `just --hel
 
 The backend provides a comprehensive API with automatic documentation:
 
-- **Interactive API docs**: http://localhost:8000/docs
-- **ReDoc documentation**: http://localhost:8000/redoc
-- **OpenAPI schema**: http://localhost:8000/openapi.json
+- **Interactive API docs**: <http://localhost:8000/docs>
+- **ReDoc documentation**: <http://localhost:8000/redoc>
+- **OpenAPI schema**: <http://localhost:8000/openapi.json>
 
 ### Health Data Integration
 
@@ -302,20 +310,23 @@ See `docs/integrations/` for detailed setup guides.
 ## Deployment
 
 ### Local Development
+
 ```bash
 # Build for local testing
 just build-web
 ```
 
 ### Railway Deployment
+
 The project is configured for automatic deployment on Railway:
 
-1. **Connect to Railway**: 
+1. **Connect to Railway**:
    - Install Railway CLI: `npm i -g @railway/cli`
    - Login: `railway login`
    - Link project: `railway link`
 
-2. **Deploy**: 
+2. **Deploy**:
+
    ```bash
    railway up
    ```
