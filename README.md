@@ -63,47 +63,79 @@ No calories. No shame. No endless input boxes. Just care, rhythm, and delicious 
 
 ### Local Development Setup
 
-#### Backend Setup
+#### Option 1: Docker (Recommended)
 
 ```bash
-# Install backend dependencies
-just install-backend
+# Start both frontend and backend with Docker
+./dev.sh
 
-# Create and edit backend/.env manually as needed
-
-# Initialize database
-just db-init
-
-# Run the development server
-just dev-backend
+# This will start:
+# - Frontend: http://localhost:3000
+# - Backend: http://localhost:8000
+# - Health check: http://localhost:8000/health
 ```
 
-#### Frontend Setup
+#### Option 2: Manual Setup
 
+**Backend Setup:**
 ```bash
-# Install frontend dependencies
-just install-frontend
+cd backend
+pip install -r requirements.txt
+./start.sh
+```
 
-# Create and edit frontend/.env manually as needed
-
-# Run the app
-just dev-frontend
+**Frontend Setup:**
+```bash
+cd frontend
+flutter pub get
+flutter run -d chrome
 ```
 
 
 ### Backend Only (API Development)
 
 ```bash
-# Install backend dependencies
-just install-backend
+# Using Docker
+docker-compose up backend
 
-# Create and edit backend/.env manually as needed
+# Or manually
+cd backend
+pip install -r requirements.txt
+./start.sh
+```
 
-# Initialize database
-just db-init
+## Deployment
 
-# Start backend server
-just dev-backend
+### Backend Deployment (Railway)
+
+```bash
+# Deploy backend to Railway
+./deploy-backend.sh
+
+# This will:
+# 1. Build the Docker image locally
+# 2. Deploy to Railway
+# 3. Provide the deployment URL
+```
+
+### Frontend Deployment (Vercel)
+
+```bash
+# Deploy frontend to Vercel
+./deploy-frontend.sh
+
+# This will:
+# 1. Build the Flutter web app
+# 2. Deploy to Vercel
+# 3. Provide the deployment URL
+```
+
+### Update Frontend Configuration
+
+After deploying the backend, update the API URL in `frontend/lib/config/app_config.dart`:
+
+```dart
+static const String _prodApiUrl = 'https://your-railway-backend-url.up.railway.app';
 ```
 
 ---
