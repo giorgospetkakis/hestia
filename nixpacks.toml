@@ -3,8 +3,7 @@ nixPkgs = ["python3", "git", "flutter", "nginx"]
 
 [phases.install]
 cmds = [
-  "python3 -m pip install --upgrade pip --no-warn-script-location",
-  "cd backend && pip3 install -r requirements.txt --no-warn-script-location",
+  "cd backend && pip3 install -r requirements.txt",
   "cd frontend && flutter pub get && flutter clean && flutter config --enable-web"
 ]
 
