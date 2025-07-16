@@ -19,6 +19,7 @@ docs/
 # Build artifacts (will be built on Railway)
 frontend/build/
 backend/__pycache__/
+backend/static/
 *.pyc
 
 # Test files
