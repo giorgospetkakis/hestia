@@ -1,0 +1,15 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+.DS_Store
+*.swp
+*.swo
+*~
+.git
+.gitignore
+README.md 
