@@ -1,0 +1,14 @@
+{
+  "name": "hestia-frontend",
+  "version": "1.0.0",
+  "description": "Hestia Flutter Web Frontend",
+  "scripts": {
+    "build": "bash build.sh",
+    "install-flutter": "git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter && export PATH=\"$HOME/flutter/bin:$PATH\" && flutter doctor && flutter config --enable-web"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
