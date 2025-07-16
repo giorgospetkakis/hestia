@@ -5,6 +5,7 @@ pydantic==2.11.7
 pytest==8.4.1
 pytest-cov==6.2.1
 httpx==0.25.2
+psutil==6.1.0
 
 # Code quality tools
 black==25.1.0
