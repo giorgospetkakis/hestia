@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import time
 
 app = FastAPI(
     title="Hestia API",
@@ -18,7 +19,18 @@ app.add_middleware(
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "service": "hestia-api"}
+    """Health check endpoint for Railway deployment"""
+    return {
+        "status": "healthy",
+        "service": "hestia-api",
+        "timestamp": time.time(),
+        "version": "0.1.0"
+    }
+
+@app.get("/")
+async def root():
+    """Root endpoint - redirects to health check"""
+    return {"message": "Hestia API is running", "health": "/health"}
 
 @app.get("/api/meals")
 async def get_meals():

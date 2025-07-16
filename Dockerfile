@@ -52,8 +52,8 @@ RUN mkdir -p public && cp -r frontend/build/web/* public/
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Make start script executable
-RUN chmod +x scripts/start.sh
+# Make scripts executable
+RUN chmod +x scripts/start.sh scripts/test-health.sh
 
 # Expose port
 EXPOSE 80

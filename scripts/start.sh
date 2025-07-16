@@ -14,15 +14,44 @@ python3 -m uvicorn app.main:app --host 127.0.0.1 --port 8000 &
 FASTAPI_PID=$!
 cd ..
 
-# Wait a moment for FastAPI to start
-sleep 2
+# Wait for FastAPI to be ready
+echo "⏳ Waiting for FastAPI to be ready..."
+for i in {1..30}; do
+    if curl -f http://127.0.0.1:8000/health >/dev/null 2>&1; then
+        echo "✅ FastAPI is ready!"
+        break
+    fi
+    if [ $i -eq 30 ]; then
+        echo "❌ FastAPI failed to start within 30 seconds"
+        exit 1
+    fi
+    sleep 1
+done
 
 # Start Nginx
 echo "🌐 Starting Nginx reverse proxy..."
 nginx -c /app/nginx.conf -g "daemon off;" &
 NGINX_PID=$!
 
-echo "✅ Both services started!"
+# Wait for Nginx to be ready
+echo "⏳ Waiting for Nginx to be ready..."
+sleep 3
+
+# Test the full health check through Nginx
+echo "🔍 Testing health check through Nginx..."
+for i in {1..10}; do
+    if curl -f http://localhost/health >/dev/null 2>&1; then
+        echo "✅ Health check is working!"
+        break
+    fi
+    if [ $i -eq 10 ]; then
+        echo "❌ Health check failed after 10 attempts"
+        exit 1
+    fi
+    sleep 1
+done
+
+echo "✅ Both services started and healthy!"
 echo "📊 FastAPI PID: $FASTAPI_PID"
 echo "📊 Nginx PID: $NGINX_PID"
 
