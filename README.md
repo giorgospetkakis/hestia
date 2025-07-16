@@ -269,15 +269,34 @@ See `docs/integrations/` for detailed setup guides.
 
 ## Deployment
 
+### Local Development
 ```bash
 # Build for local testing
 just build-web
+```
+
+### Vercel Deployment
+The project is configured for automatic deployment on Vercel:
+
+1. **Pre-build Flutter**: Before deploying, build the Flutter web app locally:
+   ```bash
+   just build-web
+   git add frontend/build/web
+   git commit -m "build: update Flutter web build"
+   git push
+   ```
+
+2. **Automatic Deployment**: Vercel will automatically:
+   - Install Python dependencies
+   - Use pre-built Flutter web files
+   - Deploy the FastAPI backend as serverless functions
+   - Serve the Flutter frontend as static files
 
 ### Environment-Specific Configs
 
 - `vercel.json` - Vercel deployment configuration
-- `scripts/build.sh` - Universal build script
-- `scripts/deployment/` - Deployment automation
+- `scripts/build.sh` - Universal build script (handles both local and Vercel builds)
+- `api/index.py` - Serverless function entry point
 
 ### CI/CD Status
 
