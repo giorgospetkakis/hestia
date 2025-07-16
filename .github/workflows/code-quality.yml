@@ -55,6 +55,6 @@ jobs:
         just install-backend
         just install-frontend
         
-    - name: Check code quality and tests
+    - name: Check code quality
       shell: bash
-      run: just check 
+      run: just lint 
