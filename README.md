@@ -286,36 +286,15 @@ See `docs/integrations/` for detailed setup guides.
 
 ## Deployment
 
-### Production Deployment
-
-Vercel handles deployment automatically via Git integration:
-
-- **Push to main branch** → Production deployment
-- **Create a pull request** → Preview deployment
-- **No manual deployment needed** - it's all automatic!
-
 ```bash
 # Build for local testing
 just build-web
-
-# Setup Vercel project (first time only)
-just vercel-setup
-```
 
 ### Environment-Specific Configs
 
 - `vercel.json` - Vercel deployment configuration
 - `docker-compose.dev.yml` - Local development setup
 - `scripts/deployment/` - Deployment automation
-
-### Vercel Deployment
-
-The project is configured for deployment on Vercel:
-
-1. **Setup**: Run `just vercel-setup` to configure your Vercel project
-2. **Preview**: Run `just vercel-preview` for preview deployments
-3. **Production**: Run `just vercel-deploy` for production deployments
-4. **CI/CD**: Automatic deployment on push to main branch
 
 ### CI/CD Status
 

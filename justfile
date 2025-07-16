@@ -294,26 +294,6 @@ health:
     curl -f http://localhost:8000/health || echo "❌ Backend not responding"
     curl -f http://localhost:3000 || echo "❌ Frontend not responding"
 
-# ===== PRODUCTION =====
-
-# Deploy to production (Vercel handles this automatically)
-deploy:
-    @echo "🚀 Vercel handles deployment automatically via Git integration"
-    @echo "📝 Push to main branch to deploy to production"
-    @echo "📝 Create a PR to get a preview deployment"
-
-# Setup Vercel project
-vercel-setup:
-    @echo "⚙️ Setting up Vercel project..."
-    vercel
-
-# Rollback deployment
-rollback:
-    @echo "🔄 Rolling back deployment..."
-    docker-compose down
-    docker-compose up -d --scale app=0
-    @echo "✅ Rollback completed"
-
 # ===== HELP =====
 
 # Show this help

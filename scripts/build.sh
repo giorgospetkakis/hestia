@@ -18,7 +18,7 @@ fi
 echo "🐍 Installing Python dependencies..."
 cd backend
 python3 -m pip install --upgrade pip
-pip3 install -r requirements-vercel.txt
+pip3 install -r requirements.txt
 
 # Install Flutter dependencies
 echo "📱 Installing Flutter dependencies..."
