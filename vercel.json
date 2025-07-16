@@ -2,9 +2,14 @@
   "version": 2,
   "buildCommand": "bash scripts/build.sh",
   "outputDirectory": "public",
-  "functions": {
-    "api/index.py": {
-      "runtime": "python3.11"
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
-  }
+  ]
 }
