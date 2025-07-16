@@ -46,27 +46,5 @@ flutter pub get
 # Build frontend for web
 echo "🏗️ Building Flutter web app..."
 flutter build web --release
-cd ..
-
-# Ensure API directory exists and is properly set up
-echo "🔧 Setting up API directory..."
-mkdir -p api
-if [ ! -f api/index.py ]; then
-    echo "📝 Creating API entry point..."
-    cat > api/index.py << 'EOF'
-# Serverless function entry point
-import sys
-import os
-
-# Add backend to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
-
-# Import the FastAPI app from backend
-from app.main import app
-
-# Export the app for serverless platforms
-handler = app
-EOF
-fi
 
 echo "✅ Build completed successfully!" 
