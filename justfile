@@ -136,8 +136,6 @@ build-web:
     @echo "🏗️ Building for web..."
     cd frontend && flutter build web --release
 
-
-
 # ===== CLEANUP =====
 
 # Clean all build artifacts

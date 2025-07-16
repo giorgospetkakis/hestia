@@ -31,6 +31,7 @@ async def root():
 async def health_check():
     return {"status": "healthy", "service": "hestia-api"}
 
+
 @app.get("/api/meals")
 async def get_meals():
     return {
