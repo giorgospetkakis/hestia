@@ -26,8 +26,8 @@ fi
 # Install Python dependencies
 echo "🐍 Installing Python dependencies..."
 cd backend
-python3 -m pip install --upgrade pip
-pip3 install -r requirements.txt
+python3 -m pip install --upgrade pip --no-warn-script-location
+pip3 install -r requirements.txt --no-warn-script-location
 cd ..
 
 # Install Flutter if not available
