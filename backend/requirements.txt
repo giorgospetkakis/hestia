@@ -6,6 +6,7 @@ pytest==8.4.1
 pytest-cov==6.2.1
 httpx==0.25.2
 psutil==6.1.0
+types-psutil==7.0.0.20250601
 
 # Code quality tools
 black==25.1.0

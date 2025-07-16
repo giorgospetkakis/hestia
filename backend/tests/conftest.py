@@ -1,17 +1,18 @@
-import os
 import sys
-import pytest
 from pathlib import Path
 
-# Add the backend directory to the Python path
-backend_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(backend_dir))
+# Ensure backend directory is in sys.path before any imports
+backend_dir = Path(__file__).parent.parent.resolve()
+if str(backend_dir) not in sys.path:
+    sys.path.insert(0, str(backend_dir))
 
-# Import the FastAPI app for testing
-from app.main import app
-from fastapi.testclient import TestClient
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+
+from app.main import app  # noqa: E402
+
 
 @pytest.fixture
 def client():
     """Create a test client for the FastAPI app"""
-    return TestClient(app) 
+    return TestClient(app)

@@ -11,9 +11,9 @@ class ApiService {
 
   // Headers for API requests
   Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  };
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
 
   // Generic GET request
   Future<Map<String, dynamic>> get(String endpoint) async {
@@ -34,7 +34,8 @@ class ApiService {
   }
 
   // Generic POST request
-  Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> post(
+      String endpoint, Map<String, dynamic> data) async {
     try {
       final response = await _client.post(
         Uri.parse(endpoint),
@@ -72,7 +73,7 @@ class ApiService {
         Uri.parse(AppConfig.healthEndpoint),
         headers: _headers,
       );
-      
+
       if (response.statusCode == 200) {
         return {
           'status': 'healthy',
@@ -99,13 +100,14 @@ class ApiService {
   }
 
   // Check API route status
-  Future<Map<String, dynamic>> checkRouteStatus(String route, String endpoint) async {
+  Future<Map<String, dynamic>> checkRouteStatus(
+      String route, String endpoint) async {
     try {
       final response = await _client.get(
         Uri.parse(endpoint),
         headers: _headers,
       );
-      
+
       return {
         'route': route,
         'status': response.statusCode == 200 ? 'online' : 'error',
@@ -134,7 +136,7 @@ class ApiService {
     ];
 
     final results = <Map<String, dynamic>>[];
-    
+
     for (final route in routes) {
       final status = await checkRouteStatus(route['name']!, route['endpoint']!);
       results.add(status);
@@ -148,4 +150,4 @@ class ApiService {
     final response = await get(AppConfig.mealsEndpoint);
     return List<Map<String, dynamic>>.from(response['meals'] ?? []);
   }
-} 
+}

@@ -4,7 +4,7 @@ import 'services/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   runApp(const HestiaApp());
 }
 
@@ -51,13 +51,13 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final apiService = ApiService();
-      
+
       // Get detailed health check
       final healthDetails = await apiService.healthCheckDetailed();
-      
+
       // Get all routes status
       final routesStatus = await apiService.getAllRoutesStatus();
-      
+
       // Get meals if API is healthy
       List<Map<String, dynamic>> meals = [];
       if (healthDetails['status'] == 'healthy') {
@@ -67,9 +67,10 @@ class _HomePageState extends State<HomePage> {
           // Meals might fail even if health check passes
         }
       }
-      
+
       setState(() {
-        _apiStatus = healthDetails['status'] == 'healthy' ? 'Connected' : 'Unhealthy';
+        _apiStatus =
+            healthDetails['status'] == 'healthy' ? 'Connected' : 'Unhealthy';
         _healthDetails = healthDetails;
         _routesStatus = routesStatus;
         _meals = meals;
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppConfig.appName} - Your Daily Ritual'),
+        title: const Text('${AppConfig.appName} - Your Daily Ritual'),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
@@ -131,9 +132,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 30),
-            
+
             // API Status
             Card(
               child: Padding(
@@ -164,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 8),
                     Text('Status: $_apiStatus'),
                     Text('URL: ${AppConfig.apiBaseUrl}'),
-                    
+
                     // Health Details
                     if (_healthDetails != null) ...[
                       const SizedBox(height: 12),
@@ -180,8 +181,8 @@ class _HomePageState extends State<HomePage> {
                         Text('Response: ${_healthDetails!['data']}'),
                       ],
                       if (_healthDetails!['error'] != null) ...[
-                        Text('Error: ${_healthDetails!['error']}', 
-                             style: const TextStyle(color: Colors.red)),
+                        Text('Error: ${_healthDetails!['error']}',
+                            style: const TextStyle(color: Colors.red)),
                       ],
                       Text('Timestamp: ${_healthDetails!['timestamp']}'),
                     ],
@@ -189,9 +190,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 20),
-            
+
             // API Routes Status
             if (_routesStatus.isNotEmpty) ...[
               const Text(
@@ -202,32 +203,40 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 8),
-              ...(_routesStatus.map((route) => Card(
-                child: ListTile(
-                  leading: Icon(
-                    route['status'] == 'online' ? Icons.check_circle : Icons.error,
-                    color: route['status'] == 'online' ? Colors.green : Colors.red,
-                  ),
-                  title: Text(route['route']),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Status: ${route['status']}'),
-                      if (route['statusCode'] != null)
-                        Text('HTTP: ${route['statusCode']}'),
-                      if (route['error'] != null)
-                        Text('Error: ${route['error']}', 
-                             style: const TextStyle(color: Colors.red)),
-                    ],
-                  ),
-                  trailing: route['status'] == 'online' 
-                    ? const Icon(Icons.signal_cellular_4_bar, color: Colors.green)
-                    : const Icon(Icons.signal_cellular_off, color: Colors.red),
-                ),
-              )).toList()),
+              ...(_routesStatus
+                  .map((route) => Card(
+                        child: ListTile(
+                          leading: Icon(
+                            route['status'] == 'online'
+                                ? Icons.check_circle
+                                : Icons.error,
+                            color: route['status'] == 'online'
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                          title: Text(route['route']),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Status: ${route['status']}'),
+                              if (route['statusCode'] != null)
+                                Text('HTTP: ${route['statusCode']}'),
+                              if (route['error'] != null)
+                                Text('Error: ${route['error']}',
+                                    style: const TextStyle(color: Colors.red)),
+                            ],
+                          ),
+                          trailing: route['status'] == 'online'
+                              ? const Icon(Icons.signal_cellular_4_bar,
+                                  color: Colors.green)
+                              : const Icon(Icons.signal_cellular_off,
+                                  color: Colors.red),
+                        ),
+                      ))
+                  .toList()),
               const SizedBox(height: 20),
             ],
-            
+
             // Meals
             if (_meals.isNotEmpty) ...[
               const Text(
@@ -245,7 +254,8 @@ class _HomePageState extends State<HomePage> {
                     final meal = _meals[index];
                     return Card(
                       child: ListTile(
-                        leading: const Icon(Icons.restaurant, color: Colors.orange),
+                        leading:
+                            const Icon(Icons.restaurant, color: Colors.orange),
                         title: Text(meal['name'] ?? 'Unknown'),
                         subtitle: Text(meal['description'] ?? ''),
                         trailing: Chip(
