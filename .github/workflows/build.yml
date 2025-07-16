@@ -57,9 +57,27 @@ jobs:
         just install-backend
         just install-frontend
         
+    - name: Debug Flutter setup
+      shell: bash
+      run: |
+        echo "Current directory: $(pwd)"
+        echo "Flutter version: $(flutter --version)"
+        echo "Frontend directory contents:"
+        ls -la frontend/
+        echo "Frontend/lib directory contents:"
+        ls -la frontend/lib/
+        
     - name: Build for web
       shell: bash
       run: just build-web
+      
+    - name: Build for web (fallback)
+      if: failure()
+      shell: bash
+      run: |
+        cd frontend
+        flutter pub get
+        flutter build web --release
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
