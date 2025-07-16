@@ -15,7 +15,7 @@ install: install-backend install-frontend
 install-backend:
     @echo "📦 Installing backend dependencies..."
     cd backend && python3 -m venv venv
-    cd backend && source venv/bin/activate && pip install -r requirements.txt
+    cd backend && . venv/bin/activate && pip install -r requirements.txt
     @echo "✅ Backend dependencies installed"
 
 # Install frontend dependencies
@@ -33,7 +33,7 @@ setup: install
 # Start backend development server
 dev-backend:
     @echo "🚀 Starting backend development server..."
-    cd backend && source venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    cd backend && . venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 # Start frontend development server
 dev-frontend:
@@ -46,7 +46,7 @@ dev: dev-backend dev-frontend
 # Start backend with hot reload
 dev-backend-watch:
     @echo "👀 Starting backend with file watching..."
-    cd backend && source venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    cd backend && . venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 # ===== TESTING =====
 
@@ -57,12 +57,12 @@ test: test-backend test-frontend
 # Run backend tests
 test-backend:
     @echo "🧪 Running backend tests..."
-    cd backend && source venv/bin/activate && pytest -v
+    cd backend && . venv/bin/activate && pytest -v
 
 # Run backend tests with coverage
 test-backend-coverage:
     @echo "🧪 Running backend tests with coverage..."
-    cd backend && source venv/bin/activate && pytest --cov=app --cov-report=html --cov-report=term
+    cd backend && . venv/bin/activate && pytest --cov=app --cov-report=html --cov-report=term
 
 # Run frontend tests
 test-frontend:
@@ -83,8 +83,8 @@ format: format-backend format-frontend
 # Format backend code
 format-backend:
     @echo "✨ Formatting backend code..."
-    cd backend && source venv/bin/activate && black app/ tests/
-    cd backend && source venv/bin/activate && isort app/ tests/
+    cd backend && . venv/bin/activate && black app/ tests/
+    cd backend && . venv/bin/activate && isort app/ tests/
 
 # Format frontend code
 format-frontend:
@@ -98,8 +98,8 @@ lint: lint-backend lint-frontend
 # Lint backend code
 lint-backend:
     @echo "🔍 Linting backend code..."
-    cd backend && source venv/bin/activate && flake8 app/ tests/
-    cd backend && source venv/bin/activate && mypy app/
+    cd backend && . venv/bin/activate && flake8 app/ tests/
+    cd backend && . venv/bin/activate && mypy app/
 
 # Lint frontend code
 lint-frontend:
@@ -147,8 +147,8 @@ clean-frontend:
 status:
     @echo "📊 Project Status:"
     @echo "Backend:"
-    cd backend && source venv/bin/activate && python --version
-    cd backend && source venv/bin/activate && pip list | grep -E "(fastapi|uvicorn|sqlalchemy)"
+    cd backend && . venv/bin/activate && python --version
+    cd backend && . venv/bin/activate && pip list | grep -E "(fastapi|uvicorn|sqlalchemy)"
     @echo "Frontend:"
     cd frontend && flutter --version
 
@@ -159,8 +159,8 @@ update-deps: update-backend-deps update-frontend-deps
 # Update backend dependencies
 update-backend-deps:
     @echo "📦 Updating backend dependencies..."
-    cd backend && source venv/bin/activate && pip install --upgrade pip
-    cd backend && source venv/bin/activate && pip install --upgrade -r requirements.txt
+    cd backend && . venv/bin/activate && pip install --upgrade pip
+    cd backend && . venv/bin/activate && pip install --upgrade -r requirements.txt
 
 # Update frontend dependencies
 update-frontend-deps:

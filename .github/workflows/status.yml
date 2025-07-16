@@ -40,11 +40,13 @@ jobs:
           ${{ runner.os }}-status-
           
     - name: Install dependencies
+      shell: bash
       run: |
         just install-backend
         just install-frontend
         
     - name: Run quick health check
+      shell: bash
       run: |
         echo "## Project Status" >> $GITHUB_STEP_SUMMARY
         echo "✅ Backend dependencies installed" >> $GITHUB_STEP_SUMMARY
@@ -55,6 +57,7 @@ jobs:
         just status >> $GITHUB_STEP_SUMMARY || echo "⚠️ Status check failed" >> $GITHUB_STEP_SUMMARY
         
     - name: Verify project structure
+      shell: bash
       run: |
         echo "## Project Structure Check" >> $GITHUB_STEP_SUMMARY
         

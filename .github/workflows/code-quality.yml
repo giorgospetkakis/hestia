@@ -50,22 +50,11 @@ jobs:
           ${{ runner.os }}-quality-
           
     - name: Install dependencies
+      shell: bash
       run: |
         just install-backend
         just install-frontend
         
-    - name: Check code formatting
-      run: just format
-      
-    - name: Check code linting
-      run: just lint
-      
-    - name: Check for security issues
-      run: just security
-      
-    - name: Check for outdated dependencies
-      run: |
-        echo "Checking for outdated Python packages..."
-        cd backend && source venv/bin/activate && pip list --outdated || true
-        echo "Checking for outdated Flutter packages..."
-        cd frontend && flutter pub outdated || true 
+    - name: Check code quality and tests
+      shell: bash
+      run: just check 

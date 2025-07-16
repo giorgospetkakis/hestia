@@ -43,12 +43,15 @@ jobs:
           ${{ runner.os }}-flutter-
           
     - name: Install frontend dependencies
+      shell: bash
       run: just install-frontend
       
     - name: Run frontend tests
+      shell: bash
       run: just test-frontend
       
     - name: Run frontend tests with coverage
+      shell: bash
       run: just test-frontend-coverage
       
     - name: Upload coverage to Codecov

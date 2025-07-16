@@ -52,17 +52,13 @@ jobs:
           ${{ runner.os }}-build-
           
     - name: Install dependencies
+      shell: bash
       run: |
         just install-backend
         just install-frontend
         
-    - name: Build backend
-      run: just build-backend
-      
-    - name: Build frontend
-      run: just build-frontend
-      
     - name: Build for web
+      shell: bash
       run: just build-web
       
     - name: Upload build artifacts
@@ -70,6 +66,5 @@ jobs:
       with:
         name: build-artifacts
         path: |
-          backend/dist/
-          frontend/build/
+          frontend/build/web/
         retention-days: 30 
