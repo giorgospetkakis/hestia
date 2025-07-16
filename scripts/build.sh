@@ -46,5 +46,6 @@ flutter pub get
 # Build frontend for web
 echo "🏗️ Building Flutter web app..."
 flutter build web --release
+cd ..
 
 echo "✅ Build completed successfully!" 

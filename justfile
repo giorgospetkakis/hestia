@@ -33,20 +33,39 @@ setup: install
 # Start backend development server
 dev-backend:
     @echo "🚀 Starting backend development server..."
-    cd backend && . venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    cd backend && . venv/bin/activate && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 # Start frontend development server
 dev-frontend:
     @echo "🚀 Starting frontend development server..."
-    cd frontend && flutter run
+    cd frontend && flutter run -d web-server --web-port 3000
 
-# Start both backend and frontend (requires tmux)
-dev: dev-backend dev-frontend
+# Start both backend and frontend with tmux
+dev:
+    @echo "🚀 Starting both backend and frontend servers..."
+    @if command -v tmux >/dev/null 2>&1; then \
+        echo "📺 Using tmux to run both servers..."; \
+        tmux new-session -d -s hestia-dev 'cd backend && . venv/bin/activate && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000'; \
+        tmux split-window -h -t hestia-dev 'cd frontend && flutter run -d web-server --web-port 3000'; \
+        tmux attach-session -t hestia-dev; \
+    else \
+        echo "❌ tmux not found. Please install tmux or run servers separately:"; \
+        echo "   Terminal 1: just dev-backend"; \
+        echo "   Terminal 2: just dev-frontend"; \
+        exit 1; \
+    fi
 
-# Start backend with hot reload
-dev-backend-watch:
-    @echo "👀 Starting backend with file watching..."
-    cd backend && . venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# Start both backend and frontend without tmux (manual)
+dev-manual:
+    @echo "🚀 Starting both servers (manual mode)..."
+    @echo "📝 Open two terminals and run:"
+    @echo "   Terminal 1: just dev-backend"
+    @echo "   Terminal 2: just dev-frontend"
+    @echo ""
+    @echo "🌐 Backend will be at: http://localhost:8000"
+    @echo "📱 Frontend will be at: http://localhost:3000"
+
+
 
 # ===== TESTING =====
 
