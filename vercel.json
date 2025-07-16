@@ -1,6 +1,7 @@
 {
   "version": 2,
   "buildCommand": "bash scripts/build.sh",
+  "outputDirectory": "frontend/build/web",
   "routes": [
     {
       "src": "/api/(.*)",
