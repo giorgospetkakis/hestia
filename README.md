@@ -1,5 +1,13 @@
 # Hestia – Your Daily Ritual for Nourishment & Rhythm
 
+<!-- 
+Workflow badges will work once the repository is created and workflows have run:
+![Backend Tests](https://github.com/[username]/hestia/workflows/Backend%20Tests/badge.svg)
+![Frontend Tests](https://github.com/[username]/hestia/workflows/Frontend%20Tests/badge.svg)
+![Code Quality](https://github.com/[username]/hestia/workflows/Code%20Quality/badge.svg)
+![Build](https://github.com/[username]/hestia/workflows/Build/badge.svg)
+-->
+
 **Hestia** is an open-source, AI-powered nutrition assistant that helps you eat better, feel better, and live with rhythm — without calorie counting, guilt, or friction.
 
 Inspired by the Greek goddess of the hearth, Hestia keeps your fire lit: planning meals, adapting to your health data, and gently guiding you toward consistency, joy, and self-care.
@@ -275,19 +283,44 @@ See `docs/integrations/` for detailed setup guides.
 
 ### Production Deployment
 
-```bash
-# Build and deploy with Docker
-just deploy
+Vercel handles deployment automatically via Git integration:
 
-# Or start production environment
-just docker-prod
+- **Push to main branch** → Production deployment
+- **Create a pull request** → Preview deployment
+- **No manual deployment needed** - it's all automatic!
+
+```bash
+# Build for local testing
+just build-web
+
+# Setup Vercel project (first time only)
+just vercel-setup
 ```
 
 ### Environment-Specific Configs
 
-- `docker-compose.yml` - Production setup
-- `docker-compose.dev.yml` - Development setup
+- `vercel.json` - Vercel deployment configuration
+- `docker-compose.dev.yml` - Local development setup
 - `scripts/deployment/` - Deployment automation
+
+### Vercel Deployment
+
+The project is configured for deployment on Vercel:
+
+1. **Setup**: Run `just vercel-setup` to configure your Vercel project
+2. **Preview**: Run `just vercel-preview` for preview deployments
+3. **Production**: Run `just vercel-deploy` for production deployments
+4. **CI/CD**: Automatic deployment on push to main branch
+
+### CI/CD Status
+
+Once the repository is created on GitHub and the workflows have run at least once, you can uncomment the workflow badges at the top of this README. The badges will show the status of:
+
+- **Backend Tests** - Python unit tests and coverage
+- **Frontend Tests** - Flutter unit tests and coverage  
+- **Code Quality** - Formatting, linting, and security checks
+- **Build** - Backend and frontend build status
+- **Deploy to Vercel** - Production deployment status
 
 ---
 

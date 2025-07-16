@@ -1,0 +1,71 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**/*.py'
+      - '**/*.dart'
+      - '.github/workflows/code-quality.yml'
+      - 'justfile'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '**/*.py'
+      - '**/*.dart'
+      - '.github/workflows/code-quality.yml'
+      - 'justfile'
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Install Just
+      uses: taiki-e/install-action@just
+      
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          backend/venv
+          frontend/.dart_tool
+          ~/.cache/pip
+        key: ${{ runner.os }}-quality-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-quality-
+          
+    - name: Install dependencies
+      run: |
+        just install-backend
+        just install-frontend
+        
+    - name: Check code formatting
+      run: just format
+      
+    - name: Check code linting
+      run: just lint
+      
+    - name: Check for security issues
+      run: just security
+      
+    - name: Check for outdated dependencies
+      run: |
+        echo "Checking for outdated Python packages..."
+        cd backend && source venv/bin/activate && pip list --outdated || true
+        echo "Checking for outdated Flutter packages..."
+        cd frontend && flutter pub outdated || true 

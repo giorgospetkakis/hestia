@@ -1,0 +1,101 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'tests/integration/**'
+      - '.github/workflows/integration-tests.yml'
+      - 'justfile'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'tests/integration/**'
+      - '.github/workflows/integration-tests.yml'
+      - 'justfile'
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: hestia_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Install Just
+      uses: taiki-e/install-action@just
+      
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          backend/venv
+          frontend/.dart_tool
+          ~/.cache/pip
+        key: ${{ runner.os }}-integration-${{ hashFiles('backend/requirements.txt', 'frontend/pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-integration-
+          
+    - name: Install dependencies
+      run: |
+        just install-backend
+        just install-frontend
+        
+    - name: Setup test environment
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/hestia_test
+        REDIS_URL: redis://localhost:6379
+      run: |
+        just setup-env
+        just db-init
+        
+    - name: Run integration tests
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/hestia_test
+        REDIS_URL: redis://localhost:6379
+      run: just test-integration
+        
+    - name: Run end-to-end tests
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/hestia_test
+        REDIS_URL: redis://localhost:6379
+      run: just test-e2e 

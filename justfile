@@ -177,6 +177,11 @@ build-web:
     @echo "🏗️ Building for web..."
     cd frontend && flutter build web --release
 
+# Build for Vercel
+build-vercel:
+    @echo "🏗️ Building for Vercel deployment..."
+    bash scripts/vercel-build.sh
+
 # Docker build
 docker-build:
     @echo "🐳 Building Docker images..."
@@ -298,12 +303,16 @@ health:
 
 # ===== PRODUCTION =====
 
-# Deploy to production
+# Deploy to production (Vercel handles this automatically)
 deploy:
-    @echo "🚀 Deploying to production..."
-    just build
-    just docker-prod
-    @echo "✅ Deployment completed"
+    @echo "🚀 Vercel handles deployment automatically via Git integration"
+    @echo "📝 Push to main branch to deploy to production"
+    @echo "📝 Create a PR to get a preview deployment"
+
+# Setup Vercel project
+vercel-setup:
+    @echo "⚙️ Setting up Vercel project..."
+    vercel
 
 # Rollback deployment
 rollback:
