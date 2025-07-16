@@ -36,6 +36,8 @@ if ! command -v flutter &> /dev/null; then
     git clone https://github.com/flutter/flutter.git -b stable --depth 1
     export PATH="$PWD/flutter/bin:$PATH"
     flutter doctor
+    flutter/bin/flutter clean
+    flutter/bin/flutter config --enable-web
 fi
 
 # Install Flutter dependencies and build
@@ -47,14 +49,5 @@ flutter pub get
 echo "🏗️ Building Flutter web app..."
 flutter build web --release
 cd ..
-
-# Debug: Show what was built
-echo "📁 Build output contents:"
-ls -la frontend/build/web/
-
-# Copy built files to public directory for Vercel
-echo "📋 Copying build files to public directory..."
-mkdir -p public
-cp -r frontend/build/web/* public/
 
 echo "✅ Build completed successfully!" 
