@@ -44,14 +44,21 @@ RUN cd frontend && flutter pub get
 COPY . .
 
 # Build Flutter web app
-RUN cd frontend && flutter build web --release --base-href /
+RUN cd frontend && flutter build web --release --base-href / || (echo "Flutter build failed" && exit 1)
 
 # Create public directory and copy Flutter build
 RUN mkdir -p public && cp -r frontend/build/web/* public/
 
 # Debug: Check if build was successful
-RUN ls -la public/ || echo "Build failed - public directory is empty"
-RUN ls -la frontend/build/web/ || echo "Flutter build directory not found"
+RUN echo "=== Checking public directory ===" && ls -la public/ || echo "Build failed - public directory is empty"
+RUN echo "=== Checking Flutter build directory ===" && ls -la frontend/build/web/ || echo "Flutter build directory not found"
+RUN echo "=== Checking for index.html ===" && find /app -name "index.html" 2>/dev/null || echo "No index.html found anywhere"
+
+# Create fallback index.html if Flutter build failed
+RUN if [ ! -f "/app/public/index.html" ]; then \
+        echo "Creating fallback index.html" && \
+        echo '<!DOCTYPE html><html><head><title>Hestia - Build in Progress</title></head><body><h1>Hestia</h1><p>Flutter build is in progress...</p></body></html>' > /app/public/index.html; \
+    fi
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf

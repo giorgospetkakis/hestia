@@ -22,12 +22,20 @@ ls -la /app/frontend/build/web/ || echo "❌ /app/frontend/build/web/ directory 
 # Check if index.html exists
 if [ -f "/app/public/index.html" ]; then
     echo "✅ index.html found in /app/public/"
+    echo "📄 index.html content preview:"
+    head -5 /app/public/index.html
 else
     echo "❌ index.html not found in /app/public/"
+    echo "🔍 What's actually in /app/public/:"
+    find /app/public/ -type f -name "*.html" 2>/dev/null || echo "No HTML files found"
 fi
 
 # Create a temporary nginx config with the correct port
 sed "s/listen 80 default_server;/listen $PORT default_server;/" /etc/nginx/nginx.conf > /tmp/nginx.conf
+
+# Debug: Show the nginx config being used
+echo "🔧 Nginx config preview:"
+head -20 /tmp/nginx.conf
 
 nginx -c /tmp/nginx.conf -g "daemon off;" &
 NGINX_PID=$!
