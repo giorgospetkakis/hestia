@@ -1,223 +1,152 @@
+# ===== BACKEND (PYTHON) =====
+
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
 
 # C extensions
-*.so
+backend/*.so
 
 # Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+backend/.Python
+backend/build/
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/share/python-wheels/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+backend/MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+backend/*.manifest
+backend/*.spec
 
 # Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+backend/htmlcov/
+backend/.tox/
+backend/.nox/
+backend/.coverage
+backend/.coverage.*
+backend/.cache
+backend/nosetests.xml
+backend/coverage.xml
+backend/*.cover
+backend/*.py,cover
+backend/.hypothesis/
+backend/.pytest_cache/
+backend/cover/
 
 # Translations
-*.mo
-*.pot
+backend/*.mo
+backend/*.pot
 
 # Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+backend/*.log
+backend/local_settings.py
+backend/db.sqlite3
+backend/db.sqlite3-journal
 
 # Flask stuff:
-instance/
-.webassets-cache
+backend/instance/
+backend/.webassets-cache
 
 # Scrapy stuff:
-.scrapy
+backend/.scrapy
 
 # Sphinx documentation
-docs/_build/
+backend/docs/_build/
 
 # PyBuilder
-.pybuilder/
-target/
+backend/.pybuilder/
+backend/target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+backend/.ipynb_checkpoints
 
 # IPython
-profile_default/
-ipython_config.py
+backend/profile_default/
+backend/ipython_config.py
 
 # pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
+backend/.python-version
 
 # pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+backend/Pipfile.lock
 
 # poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
+backend/poetry.lock
+backend/.pdm.toml
 
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/#use-with-ide
-.pdm.toml
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
+# PEP 582
+backend/__pypackages__/
 
 # Celery stuff
-celerybeat-schedule
-celerybeat.pid
+backend/celerybeat-schedule
+backend/celerybeat.pid
 
 # SageMath parsed files
-*.sage.py
+backend/*.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+backend/.env
+backend/.venv
+backend/env/
+backend/venv/
+backend/ENV/
+backend/env.bak/
+backend/venv.bak/
 
 # Spyder project settings
-.spyderproject
-.spyproject
+backend/.spyderproject
+backend/.spyproject
 
 # Rope project settings
-.ropeproject
+backend/.ropeproject
 
 # mkdocs documentation
-/site
+backend/site/
 
 # mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+backend/.mypy_cache/
+backend/.dmypy.json
+backend/dmypy.json
 
 # Pyre type checker
-.pyre/
+backend/.pyre/
 
 # pytype static type analyzer
-.pytype/
+backend/.pytype/
 
 # Cython debug symbols
-cython_debug/
+backend/cython_debug/
 
 # PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be added to the global gitignore or merged into this project gitignore.  For a PyCharm
-#  project, it is recommended to include the following files:
-#  .idea/
-#  *.iml
-#  *.ipr
-#  *.iws
-.idea/
+backend/.idea/
+backend/*.iml
+backend/*.ipr
+backend/*.iws
 
 # VS Code
-.vscode/
-
-# ===== FLUTTER/DART =====
-
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-/build/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# ===== BACKEND SPECIFIC =====
+backend/.vscode/
 
 # Database
-*.db
-*.sqlite
-*.sqlite3
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
 backend/data/
 backend/logs/
 
@@ -228,6 +157,61 @@ backend/alembic/versions/*.py
 # Static files
 backend/static/uploads/
 
+# ===== FRONTEND (FLUTTER/DART) =====
+
+# Miscellaneous
+frontend/*.class
+frontend/*.log
+frontend/*.pyc
+frontend/*.swp
+frontend/.DS_Store
+frontend/.atom/
+frontend/.buildlog/
+frontend/.history
+frontend/.svn/
+frontend/.swiftpm/
+frontend/migrate_working_dir/
+
+# IntelliJ related
+frontend/*.iml
+frontend/*.ipr
+frontend/*.iws
+frontend/.idea/
+
+# VS Code
+frontend/.vscode/
+
+# Flutter/Dart/Pub related
+frontend/**/doc/api/
+frontend/**/ios/Flutter/.last_build_id
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/.pub-cache/
+frontend/.pub/
+frontend/build/
+
+# Symbolication related
+frontend/app.*.symbols
+
+# Obfuscation related
+frontend/app.*.map.json
+
+# Android Studio will place build artifacts here
+frontend/android/app/debug
+frontend/android/app/profile
+frontend/android/app/release
+
+# ===== TESTS =====
+
+# Test coverage
+tests/.coverage
+tests/htmlcov/
+tests/.tox/
+tests/.pytest_cache/
+tests/.mypy_cache/
+
 # ===== PROJECT SPECIFIC =====
 
 # Environment files
@@ -236,8 +220,6 @@ backend/static/uploads/
 .env.development
 .env.test
 .env.production
-
-
 
 # OS generated files
 .DS_Store
@@ -331,15 +313,6 @@ jspm_packages/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# ===== TESTING =====
-
-# Test coverage
-.coverage
-htmlcov/
-.tox/
-.pytest_cache/
-.mypy_cache/
-
 # ===== DEPLOYMENT =====
 
 # Build artifacts
@@ -351,3 +324,10 @@ dist/
 # Local development
 .local/
 local/
+
+# IDE files (global)
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
