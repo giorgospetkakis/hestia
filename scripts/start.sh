@@ -14,6 +14,18 @@ echo "🌐 Starting Nginx reverse proxy..."
 PORT=${PORT:-80}
 echo "🔧 Using port: $PORT"
 
+# Debug: Check if Flutter build files exist
+echo "🔍 Checking Flutter build files..."
+ls -la /app/public/ || echo "❌ /app/public/ directory not found"
+ls -la /app/frontend/build/web/ || echo "❌ /app/frontend/build/web/ directory not found"
+
+# Check if index.html exists
+if [ -f "/app/public/index.html" ]; then
+    echo "✅ index.html found in /app/public/"
+else
+    echo "❌ index.html not found in /app/public/"
+fi
+
 # Create a temporary nginx config with the correct port
 sed "s/listen 80 default_server;/listen $PORT default_server;/" /etc/nginx/nginx.conf > /tmp/nginx.conf
 

@@ -44,10 +44,14 @@ RUN cd frontend && flutter pub get
 COPY . .
 
 # Build Flutter web app
-RUN cd frontend && flutter build web --release
+RUN cd frontend && flutter build web --release --web-renderer html
 
 # Create public directory and copy Flutter build
 RUN mkdir -p public && cp -r frontend/build/web/* public/
+
+# Debug: Check if build was successful
+RUN ls -la public/ || echo "Build failed - public directory is empty"
+RUN ls -la frontend/build/web/ || echo "Flutter build directory not found"
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
